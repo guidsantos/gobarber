@@ -20,7 +20,7 @@ const Input: React.FC<InputProps> = ({ name, icon: Icon, ...rest }) => {
   const [isFocused, setIsFocused] = useState(false);
   const [isFilled, setIsFilled] = useState(false);
 
-  const { fieldName, defaultValue, registerField } = useField(name);
+  const { fieldName, defaultValue, error, registerField } = useField(name);
 
   // Para melhorar a performace do site e não renderizar a função sempre que o componente for chamado utilziar useCallback
   const handleInputBlur = useCallback(() => {
@@ -51,6 +51,8 @@ const Input: React.FC<InputProps> = ({ name, icon: Icon, ...rest }) => {
         ref={inputRef}
         {...rest}
       />
+
+      {error}
     </Container>
   );
 };
