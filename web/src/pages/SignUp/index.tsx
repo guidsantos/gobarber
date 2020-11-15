@@ -15,14 +15,14 @@ import { Container, Content, Background } from './styles';
 const SignUp: React.FC = () => {
   const formRef = useRef<FormHandles>(null);
 
-  const handleSubmit = useCallback(async (data: object) => {
+  const handleSubmit = useCallback(async data => {
     try {
       formRef.current?.setErrors({});
       // Yup serve para facilitar a validação do cadastro, já retornando erros de campos que foram preenchidos de forma errada
       const schema = Yup.object().shape({
-        name: Yup.string().required('Nome Obrigatório'),
+        name: Yup.string().required('Nome obrigatório'),
         email: Yup.string()
-          .required('Email é Obrigatório')
+          .required('Email obrigatório')
           .email('Digite um e-mail válido'),
         password: Yup.string().min(6, 'No mínimo 6 dígitos'),
       });
