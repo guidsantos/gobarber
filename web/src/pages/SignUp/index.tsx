@@ -4,7 +4,8 @@ import { FormHandles } from '@unform/core';
 import { Form } from '@unform/web';
 import * as Yup from 'yup';
 import getValidationErrors from '../../utils/getValidationErrors';
-import {Link} from 'react-router-dom';
+import {Link, useHistory} from 'react-router-dom';
+import api from '../../services/api';
 
 import logoImg from '../../assets/logo.svg';
 
@@ -13,10 +14,20 @@ import Button from '../../components/Button';
 
 import { Container, Content, Background, AnimationContainer } from './styles';
 
+import { useToast } from '../../hooks/Toast';
+
+interface SignUpFormData {
+  name: string,
+  email: string,
+  password: string,
+}
+
 const SignUp: React.FC = () => {
   const formRef = useRef<FormHandles>(null);
+  const {addToast} = useToast();
+  const history = useHistory();
 
-  const handleSubmit = useCallback(async data => {
+  const handleSubmit = useCallback(async (data: SignUpFormData) => {
     try {
       formRef.current?.setErrors({});
       // Yup serve para facilitar a validação do cadastro, já retornando erros de campos que foram preenchidos de forma errada
@@ -29,11 +40,33 @@ const SignUp: React.FC = () => {
       });
 
       await schema.validate(data, { abortEarly: false });
+
+      await api.post('./users', data);
+
+      history.push('/');
+
+      addToast ({
+        type: 'success',
+        title: 'Cadastro realizado!',
+        description: 'Você já pode fazer seu logon no GoBarber!'
+      })
+
     } catch (err) {
-      const errors = getValidationErrors(err);
-      formRef.current?.setErrors(errors);
+      if(err instanceof Yup.ValidationError){
+        const errors = getValidationErrors(err);
+
+        formRef.current?.setErrors(errors);
+
+        return;
+      }
+      addToast({
+        type: 'error',
+        title: 'Erro no Cadastro',
+        description: 'Ocorreu um erro ao fazer o cadastro, tente novamente',
+      });
     }
-  }, []);
+  }, [history, useToast]);
+
 
   return (
     <Container>
