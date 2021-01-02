@@ -4,17 +4,18 @@ import express, { Request, Response, NextFunction } from 'express';
 import cors from 'cors';
 import 'express-async-errors';
 
+import uploadConfig from '@config/upload';
+import AppError from '@shared/errors/AppError';
 import routes from './routes';
-import uploadConfg from './config/upload';
-import AppError from './errors/AppError';
 
-import './database';
+import '@shared/infra/typeorm';
+import '@shared/container';
 
 const app = express();
 
 app.use(cors());
 app.use(express.json());
-app.use('/files', express.static(uploadConfg.directory));
+app.use('/files', express.static(uploadConfig.directory));
 app.use(routes);
 
 app.use((err: Error, request: Request, response: Response, _: NextFunction) => {
@@ -24,7 +25,6 @@ app.use((err: Error, request: Request, response: Response, _: NextFunction) => {
       .json({ status: 'error', message: err.message });
   }
 
-  // eslint-disable-next-line no-console
   console.error(err);
 
   return response
@@ -33,6 +33,5 @@ app.use((err: Error, request: Request, response: Response, _: NextFunction) => {
 });
 
 app.listen(3333, () => {
-  // eslint-disable-next-line no-console
-  console.log('✈  Server Started on port 3333!');
+  console.log('🚀 Server started on port 3333');
 });
