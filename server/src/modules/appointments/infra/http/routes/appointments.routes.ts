@@ -8,10 +8,6 @@ const appointmentsControler = new AppointmentsController();
 
 appointmentsRouter.use(ensureAuthenticated);
 
-/* appointmentsRouter.get('/', async (request, response) => {
-  return response.json(await appointmentsRepository.find());
-});
-*/
-appointmentsRouter.post('/', appointmentsControler.create);
+appointmentsRouter.post('/', appointmentsControler.index);
 
 export default appointmentsRouter;
