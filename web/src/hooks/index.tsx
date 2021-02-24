@@ -1,7 +1,7 @@
 import React from 'react';
 
 import { AuthProvider } from '../hooks/Auth';
-import { ToastProvider} from '../hooks/Toast';
+import { ToastProvider} from '../hooks/toast';
 
 
 const AppProvider: React.FC = ({children}) => (

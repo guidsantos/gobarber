@@ -14,7 +14,7 @@ import Button from '../../components/Button';
 
 import { Container, Content, Background, AnimationContainer } from './styles';
 
-import { useToast } from '../../hooks/Toast';
+import { useToast } from '../../hooks/toast';
 
 interface SignUpFormData {
   name: string,
@@ -65,7 +65,7 @@ const SignUp: React.FC = () => {
         description: 'Ocorreu um erro ao fazer o cadastro, tente novamente',
       });
     }
-  }, [history, useToast]);
+  }, [history, addToast]);
 
 
   return (
@@ -91,7 +91,7 @@ const SignUp: React.FC = () => {
             <Button type="submit">Cadastrar</Button>
           </Form>
 
-          <Link to="/">
+          <Link to="/signin">
             <FiArrowLeft />
             Voltar para Logon
           </Link>

@@ -6,7 +6,7 @@ import {
   FiXCircle,
 } from 'react-icons/fi';
 
-import { ToastMessage, useToast } from '../../../hooks/Toast';
+import { ToastMessage, useToast } from '../../../hooks/toast';
 import { Container } from './styles';
 
 interface ToastProps {
@@ -36,7 +36,7 @@ const Toast: React.FC<ToastProps> = ({ message, style }) => {
   return (
     <Container
       type={message.type}
-      hasdescription={!!message.description}
+      hasDescription={Number(!!message.description)}
       style={style}
     >
       {icons[message.type || 'info']}
