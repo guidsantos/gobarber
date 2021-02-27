@@ -3,7 +3,7 @@ import DayPicker, { DayModifiers } from 'react-day-picker';
 import 'react-day-picker/lib/style.css';
 import { FiClock, FiPower } from 'react-icons/fi';
 import logoImg from '../../assets/logo.svg';
-import { useAuth } from '../../hooks/Auth';
+import { useAuth } from '../../hooks/auth';
 import api from '../../services/api';
 import { isToday, format, parseISO, isAfter } from 'date-fns';
 import ptBR from 'date-fns/locale/pt-BR';
@@ -18,6 +18,7 @@ import {
   Schedule,
   Section
 } from './styles';
+import { Link } from 'react-router-dom';
 
 
 
@@ -55,7 +56,7 @@ const Dashboard: React.FC = () => {
     setCurrentMonth(month);
   }, []);
 
-  useEffect(() => {
+   useEffect( ()  =>  {
     api.get(`/providers/${user.id}/month-availability`, {
       params: {
         year: currentMonth.getFullYear(),
@@ -137,7 +138,7 @@ const Dashboard: React.FC = () => {
             <img src={user.avatar_url} alt={user.name} />
             <div>
               <span>Bem vindo,</span>
-              <strong>{user.name}</strong>
+              <strong> <Link to="/profile"> {user.name} </Link> </strong>
             </div>
           </Profile>
 
@@ -149,7 +150,7 @@ const Dashboard: React.FC = () => {
 
       <Content>
         <Schedule>
-          <h1>Horários agendadoos</h1>
+          <h1>Horários agendados</h1>
           <p>
           {isToday(selectedDate) && <span>Hoje</span>}
             <span>{selectedDateAsText}</span>

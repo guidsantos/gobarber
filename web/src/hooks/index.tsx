@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { AuthProvider } from '../hooks/Auth';
+import { AuthProvider } from '../hooks/auth';
 import { ToastProvider} from '../hooks/toast';
 
 
